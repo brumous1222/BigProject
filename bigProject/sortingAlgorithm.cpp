@@ -120,8 +120,8 @@ void MergeSort(int* a, int left, int right)
 	if (left < right)
 	{
 			int mid = left + (right - left) / 2;
-			Sort(a, left, mid, k);
-			Sort(a, mid + 1, right, k);
+			MergeSort(a, left, mid, k);
+			MergeSort(a, mid + 1, right, k);
 			Merge(a, left, right, mid);
 		}
 	
