@@ -77,3 +77,52 @@ void introSort(int arr[], int n) {
     quickSort(arr, 0, n - 1, depthLimit);
     insertionSort(arr, 0, n - 1);
 }
+void Merge(int* a, int left, int right, int mid)
+{
+	int n1 = mid - left + 1;
+	int n2 = right - mid;
+	int* b = new int[n1];
+	int* c = new int[n2];
+	for (int i = 0; i < n1; i++)
+		b[i] = a[left + i];
+	for (int j = 0; j < n2; j++)
+		c[j] = a[mid + 1 + j];
+	int i = 0;
+	int j = 0;
+	int k = left;
+	while (j < n2 && i < n1)
+	{
+		if (b[i] >= c[j])
+		{
+			a[k] = c[j];
+			j++;
+		}
+		else if (b[i] < c[j])
+		{
+			a[k] = b[i];
+			j++;
+		}
+		k++;
+	}
+	while (i < n1)
+	{
+		a[k++] = b[i++];
+	}
+	while (j < n2)
+	{
+		a[k++] = c[j++];
+	}
+	delete[]b;
+	delete[]c;
+}
+void MergeSort(int* a, int left, int right)
+{
+	if (left < right)
+	{
+			int mid = left + (right - left) / 2;
+			Sort(a, left, mid, k);
+			Sort(a, mid + 1, right, k);
+			Merge(a, left, right, mid);
+		}
+	
+}
