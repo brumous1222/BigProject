@@ -77,3 +77,16 @@ void introSort(int arr[], int n) {
     quickSort(arr, 0, n - 1, depthLimit);
     insertionSort(arr, 0, n - 1);
 }
+
+template <class T>
+void selectionSort(T arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        int currMinIdx = i;
+        for (int j = i + 1; j < n; j++) { // find the minIdx in [i, n-1]
+            if (arr[j] < arr[currMinIdx]) {
+                currMinIdx = j;
+            }
+        }
+        swap(arr[i], arr[currMinIdx]); // swap [i] with [currMinIdx]
+    }
+}

@@ -17,4 +17,7 @@ void insertionSort(int arr[], int low, int high);
 void introSort(int arr[], int n);
 template <class T>
 void MergeSort(T a[],int n);
+
+template <class T>
+void selctionSort(T arr[], int n);
 #endif // !sortingAlgorithm_h
