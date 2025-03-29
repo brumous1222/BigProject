@@ -1,8 +1,8 @@
 #include "sortingAlgorithm.h"
 
 using namespace std;
-
-void heapify(int arr[], int n, int i) {
+template<class T>
+void heapify(T arr[], int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -20,8 +20,8 @@ void heapify(int arr[], int n, int i) {
         heapify(arr, n, largest);
     }
 }
-
-void heapSort(int arr[], int n) {
+template<class T>
+void heapSort(T arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
     }
@@ -31,8 +31,8 @@ void heapSort(int arr[], int n) {
         heapify(arr, i, 0);
     }
 }
-
-int partition(int arr[], int low, int high) {
+template<class T>
+int partition(T arr[], int low, int high) {
     int pivot = arr[high];
     int i = low - 1;
 
@@ -45,8 +45,8 @@ int partition(int arr[], int low, int high) {
     swap(arr[i + 1], arr[high]);
     return i + 1;
 }
-
-void quickSort(int arr[], int low, int high, int depthLimit) {
+template <class T>
+void quickSort(T arr[], int low, int high, int depthLimit) {
     if (low < high) {
         if (depthLimit == 0) {
             heapSort(arr + low, high - low + 1);
@@ -58,8 +58,8 @@ void quickSort(int arr[], int low, int high, int depthLimit) {
         quickSort(arr, pivot + 1, high, depthLimit - 1);
     }
 }
-
-void insertionSort(int arr[], int low, int high) {
+template<class T>
+void insertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
         int key = arr[i];
         int j = i - 1;
@@ -71,8 +71,8 @@ void insertionSort(int arr[], int low, int high) {
         arr[j + 1] = key;
     }
 }
-
-void introSort(int arr[], int n) {
+template <class T>
+void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, 0, n - 1, depthLimit);
     insertionSort(arr, 0, n - 1);
