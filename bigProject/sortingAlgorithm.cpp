@@ -94,13 +94,13 @@ void selectionSort(T arr[], int n) {
 template <class T>
 int binarySearch(T arr[], int low, int high, const T &target) { // modified for insertion sort
     int mid = (low + high) / 2;
-    if (low == high) { // nothing more to search, just return low
-        return low;
-    } else if (arr[mid] == target) { // found
+    if (arr[mid] == target) {
         return mid;
-    } else if (arr[mid] > target) { // search left
-        return binarySearch(arr, low, mid - 1, target);
-    } else { // search right
+    } else if (low >= high) {
+        return max(0, low);
+    } else if (arr[mid] < target) { // search right
         return binarySearch(arr, mid + 1, high, target);
+    } else {
+        return binarySearch(arr, low, mid - 1, target);
     }
 }

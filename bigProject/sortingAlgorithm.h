@@ -22,5 +22,6 @@ template <class T>
 void selectionSort(T arr[], int n);
 
 template <class T>
-int binarySearch(T arr[], int low, int high, const T &target);
+int binarySearch(T arr[], int low, int high, const T &target); // modified for insertion sort
+
 #endif // !sortingAlgorithm_h
