@@ -132,3 +132,46 @@ void MergeSort(T a[], int n)
 {
 	HelpMerge(a, 0, n - 1);
 }
+template<class T>
+int findMax(T arr[], int n) {
+    int maxNum = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > maxNum) {
+            maxNum = arr[i];
+        }
+    }
+    return maxNum;
+}
+template<class T>
+void countingSort(T arr[], int n, int exp) {
+    int* output = new int[n];
+    int count[10] = {0};  
+
+    for (int i = 0; i < n; i++) {
+        int digit = (arr[i] / exp) % 10;
+        count[digit]++;
+    }
+
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) { 
+        int digit = (arr[i] / exp) % 10;
+        output[count[digit] - 1] = arr[i];
+        count[digit]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+    delete[] output;
+}
+template<class T>
+void radixSort(T arr[], int n) {
+    int maxNum = findMax(arr, n);
+
+    for (int exp = 1; maxNum / exp > 0; exp *= 10) {
+        countingSort(arr, n, exp);
+    }
+}
