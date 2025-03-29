@@ -77,12 +77,13 @@ void introSort(int arr[], int n) {
     quickSort(arr, 0, n - 1, depthLimit);
     insertionSort(arr, 0, n - 1);
 }
-void Merge(int* a, int left, int right, int mid)
+template<class T>
+void Merge(T a[], int left, int right, int mid)
 {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
-	int* b = new int[n1];
-	int* c = new int[n2];
+	T *b = new T[n1];
+	T *c = new T[n2];
 	for (int i = 0; i < n1; i++)
 		b[i] = a[left + i];
 	for (int j = 0; j < n2; j++)
@@ -115,14 +116,19 @@ void Merge(int* a, int left, int right, int mid)
 	delete[]b;
 	delete[]c;
 }
-void MergeSort(int* a, int left, int right)
+template<class T>
+void HelpMerge(T a[], int left, int right)
 {
 	if (left < right)
 	{
-			int mid = left + (right - left) / 2;
-			MergeSort(a, left, mid, k);
-			MergeSort(a, mid + 1, right, k);
-			Merge(a, left, right, mid);
-		}
-	
+		int mid = left + (right-left) / 2;
+		HelpMerge(a, left, mid);
+		HelpMerge(a, mid+1, right);
+		Merge(a, left, right, mid);
+	}
+}
+template<class T>
+void MergeSort(T a[], int n)
+{
+	HelpMerge(a, 0, n - 1);
 }
