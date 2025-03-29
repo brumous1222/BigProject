@@ -1,8 +1,8 @@
 #include "sortingAlgorithm.h"
 
 using namespace std;
-
-void heapify(int arr[], int n, int i) {
+template<class T>
+void heapify(T arr[], int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -20,8 +20,8 @@ void heapify(int arr[], int n, int i) {
         heapify(arr, n, largest);
     }
 }
-
-void heapSort(int arr[], int n) {
+template<class T>
+void heapSort(T arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
     }
@@ -31,8 +31,8 @@ void heapSort(int arr[], int n) {
         heapify(arr, i, 0);
     }
 }
-
-int partition(int arr[], int low, int high) {
+template<class T>
+int partition(T arr[], int low, int high) {
     int pivot = arr[high];
     int i = low - 1;
 
@@ -45,8 +45,8 @@ int partition(int arr[], int low, int high) {
     swap(arr[i + 1], arr[high]);
     return i + 1;
 }
-
-void quickSort(int arr[], int low, int high, int depthLimit) {
+template <class T>
+void quickSort(T arr[], int low, int high, int depthLimit) {
     if (low < high) {
         if (depthLimit == 0) {
             heapSort(arr + low, high - low + 1);
@@ -58,8 +58,8 @@ void quickSort(int arr[], int low, int high, int depthLimit) {
         quickSort(arr, pivot + 1, high, depthLimit - 1);
     }
 }
-
-void insertionSort(int arr[], int low, int high) {
+template<class T>
+void insertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
         int key = arr[i];
         int j = i - 1;
@@ -71,8 +71,8 @@ void insertionSort(int arr[], int low, int high) {
         arr[j + 1] = key;
     }
 }
-
-void introSort(int arr[], int n) {
+template <class T>
+void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, 0, n - 1, depthLimit);
     insertionSort(arr, 0, n - 1);
@@ -119,5 +119,103 @@ void binaryInsertionSort(T arr[], int n) {
             j--;
         }
         arr[j] = currVal;
+    }
+}
+template<class T>
+void Merge(T a[], int left, int right, int mid)
+{
+	int n1 = mid - left + 1;
+	int n2 = right - mid;
+	T *b = new T[n1];
+	T *c = new T[n2];
+	for (int i = 0; i < n1; i++)
+		b[i] = a[left + i];
+	for (int j = 0; j < n2; j++)
+		c[j] = a[mid + 1 + j];
+	int i = 0;
+	int j = 0;
+	int k = left;
+	while (j < n2 && i < n1)
+	{
+		if (b[i] >= c[j])
+		{
+			a[k] = c[j];
+			j++;
+		}
+		else if (b[i] < c[j])
+		{
+			a[k] = b[i];
+			j++;
+		}
+		k++;
+	}
+	while (i < n1)
+	{
+		a[k++] = b[i++];
+	}
+	while (j < n2)
+	{
+		a[k++] = c[j++];
+	}
+	delete[]b;
+	delete[]c;
+}
+template<class T>
+void HelpMerge(T a[], int left, int right)
+{
+	if (left < right)
+	{
+		int mid = left + (right-left) / 2;
+		HelpMerge(a, left, mid);
+		HelpMerge(a, mid+1, right);
+		Merge(a, left, right, mid);
+	}
+}
+template<class T>
+void MergeSort(T a[], int n)
+{
+	HelpMerge(a, 0, n - 1);
+}
+template<class T>
+int findMax(T arr[], int n) {
+    int maxNum = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > maxNum) {
+            maxNum = arr[i];
+        }
+    }
+    return maxNum;
+}
+template<class T>
+void countingSort(T arr[], int n, int exp) {
+    int* output = new int[n];
+    int count[10] = {0};  
+
+    for (int i = 0; i < n; i++) {
+        int digit = (arr[i] / exp) % 10;
+        count[digit]++;
+    }
+
+    for (int i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) { 
+        int digit = (arr[i] / exp) % 10;
+        output[count[digit] - 1] = arr[i];
+        count[digit]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+    delete[] output;
+}
+template<class T>
+void radixSort(T arr[], int n) {
+    int maxNum = findMax(arr, n);
+
+    for (int exp = 1; maxNum / exp > 0; exp *= 10) {
+        countingSort(arr, n, exp);
     }
 }
