@@ -96,7 +96,7 @@ int binarySearch(T arr[], int low, int high, const T &target) { // modified for 
     int mid = (low + high) / 2;
     if (arr[mid] == target) {
         return mid;
-    } else if (low >= high) {
+    } else if (low >= high) { // modified for insertion sort
         return max(0, low);
     } else if (arr[mid] < target) { // search right
         return binarySearch(arr, mid + 1, high, target);
@@ -109,10 +109,10 @@ template <class T>
 void binaryInsertionSort(T arr[], int n) {
     for (int i = 1; i < n; i++) {
         T currVal = arr[i];
-        int suitableIdx = binarySearch(arr, 0, i - 1, currVal);
+        int suitableIdx = binarySearch(arr, 0, i - 1, currVal); // search for suitable idx for currVal
         int j = i;
-        if (arr[suitableIdx] <= arr[i]) {
-            suitableIdx++;
+        if (arr[suitableIdx] <= arr[i]) { // check if currVal (arr[i]) is  >= to arr[suitableIdx]
+            suitableIdx++; // if so, insert arr[i] add [suitableIdx + 1], else, insert arr[i] at arr[suitableIdx]
         }
         while (j > 0 && j > suitableIdx) {
             arr[j] = arr[j - 1];
