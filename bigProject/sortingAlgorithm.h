@@ -19,4 +19,10 @@ template <class T>
 void introSort(T arr[], int n);
 template <class T>
 void MergeSort(T a[],int n);
+template <class T>
+int findMax(T arr[], int n);
+template <class T>
+void countingSort(T arr[], int n, int exp);
+template <class T>
+void radixSort(T arr[], int n);
 #endif // !sortingAlgorithm_h
