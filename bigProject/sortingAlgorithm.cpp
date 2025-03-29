@@ -104,3 +104,24 @@ int binarySearch(T arr[], int low, int high, const T &target) { // modified for 
         return binarySearch(arr, low, mid - 1, target);
     }
 }
+
+template <class T>
+void binaryInsertionSort(T arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        T currVal = arr[i];
+        int suitableIdx = binarySearch(arr, 0, i - 1, currVal);
+        int j = i;
+        if (arr[suitableIdx] <= arr[i]) {
+            suitableIdx++;
+        }
+        while (j > 0 && j > suitableIdx) {
+            arr[j] = arr[j - 1];
+            j--;
+        }
+        arr[j] = currVal;
+        for (int i = 0; i < n; i++) { 
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+}
