@@ -15,4 +15,6 @@ void quickSort(int arr[], int low, int high, int depthLimit);
 void insertionSort(int arr[], int low, int high);
 
 void introSort(int arr[], int n);
+template <class T>
+void MergeSort(T a[],int n);
 #endif // !sortingAlgorithm_h
