@@ -121,6 +121,32 @@ void binaryInsertionSort(T arr[], int n) {
         arr[j] = currVal;
     }
 }
+
+template <class T>
+void shakerSort(T arr[], int n) { // it is like doing bubble sort in both directions (left to right and right to left) alternatively
+    int maxIdx = n - 1;
+    int minIdx = 0;
+    int i = 0;
+    while (maxIdx > minIdx) {
+        if (i % 2 == 0) { // i is a counter to know when to loop from left to right or right to left
+            for (int j = minIdx; j < maxIdx; j++) { // loop from left to right (find max)
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr[j], arr[j + 1]);
+                }
+            }
+            maxIdx--;
+        } else {
+            for (int j = maxIdx; j > minIdx; j--) { // loop from right to left (find min)
+                if (arr[j] < arr[j - 1]) {
+                    swap(arr[j], arr[j - 1]);
+                }
+            }
+            minIdx++;
+        }
+        i++;
+    }
+}
+
 template<class T>
 void Merge(T a[], int left, int right, int mid)
 {

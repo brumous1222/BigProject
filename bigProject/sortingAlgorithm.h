@@ -29,6 +29,9 @@ int binarySearch(T arr[], int low, int high, const T &target); // modified for i
 template <class T>
 void binaryInsertionSort(T arr[], int n);
 template <class T>
+void shakerSort(T arr[], int n);
+
+template <class T>
 int findMax(T arr[], int n);
 template <class T>
 void countingSort(T arr[], int n, int exp);
