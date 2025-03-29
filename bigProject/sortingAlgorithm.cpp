@@ -78,7 +78,7 @@ void introSort(int arr[], int n) {
     insertionSort(arr, 0, n - 1);
 }
 template<class T>
-void Merge(T *a, int left, int right, int mid)
+void Merge(T a[], int left, int right, int mid)
 {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
@@ -117,7 +117,7 @@ void Merge(T *a, int left, int right, int mid)
 	delete[]c;
 }
 template<class T>
-void HelpMerge(T *a, int left, int right)
+void HelpMerge(T a[], int left, int right)
 {
 	if (left < right)
 	{
@@ -128,13 +128,7 @@ void HelpMerge(T *a, int left, int right)
 	}
 }
 template<class T>
-void MergeSort(T *a, int n)
+void MergeSort(T a[], int n)
 {
 	HelpMerge(a, 0, n - 1);
-}
-template <class T>
-void printArray(T *a, int n) {
-	for (int i = 0; i < n; i++)
-		cout << a[i] << " ";
-	cout << endl;
 }
