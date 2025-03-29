@@ -119,9 +119,5 @@ void binaryInsertionSort(T arr[], int n) {
             j--;
         }
         arr[j] = currVal;
-        for (int i = 0; i < n; i++) { 
-            cout << arr[i] << " ";
-        }
-        cout << endl;
     }
 }
