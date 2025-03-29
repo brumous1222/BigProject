@@ -20,4 +20,7 @@ void MergeSort(T a[],int n);
 
 template <class T>
 void selectionSort(T arr[], int n);
+
+template <class T>
+int binarySearch(T arr[], int low, int high, const T &target);
 #endif // !sortingAlgorithm_h
