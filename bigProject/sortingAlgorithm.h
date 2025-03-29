@@ -19,5 +19,5 @@ template <class T>
 void MergeSort(T a[],int n);
 
 template <class T>
-void selctionSort(T arr[], int n);
+void selectionSort(T arr[], int n);
 #endif // !sortingAlgorithm_h
