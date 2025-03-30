@@ -39,27 +39,27 @@ int partition(T arr[], int low, int high) {
     for (int j = low; j < high; j++) {
         if (arr[j] < pivot) {
             i++;
-            swap(arr[i], arr[j]);
+            std::swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i + 1], arr[high]);
+    std::swap(arr[i + 1], arr[high]);
     return i + 1;
 }
 template<class T>
 void helpquicksort(T arr[], int low, int high, int depthLimit) {
     if (low < high) {
         if (depthLimit == 0) {
-            sort(arr + low, arr + high + 1);  
+            std::sort(arr + low, arr + high + 1);  
             return;
         }
         int pivot = partition(arr, low, high);
-        quickSort(arr, low, pivot - 1, depthLimit - 1);
-        quickSort(arr, pivot + 1, high, depthLimit - 1);
+        helpquicksort(arr, low, pivot - 1, depthLimit - 1);
+        helpquicksort(arr, pivot + 1, high, depthLimit - 1);
     }
 }
 template<class T>
-void quicksort(T arr[], int n) {
-    int maxDepth = 2 * log2(n);  
+void quickSort(T arr[], int n) {
+    int maxDepth = 2 * std::log2(n);  
     helpquicksort(arr, 0, n - 1, maxDepth);
 }
 template<class T>
@@ -75,15 +75,16 @@ void helpinsertionSort(T arr[], int low, int high) {
         arr[j + 1] = key;
     }
 }
+
 template<class T>
 void insertionSort(T arr[], int n) {
-    insertionSort(arr, 0, n - 1);
+    helpinsertionSort(arr, 0, n - 1);
 }
 template <class T>
 void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, 0, n - 1, depthLimit);
-    insertionSort(arr, 0, n - 1);
+    insertionSort(arr, n);
 }
 
 template <class T>
