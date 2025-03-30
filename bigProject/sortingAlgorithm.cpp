@@ -137,14 +137,14 @@ void Merge(T a[], int left, int right, int mid)
 	int k = left;
 	while (j < n2 && i < n1)
 	{
-		if (b[i] >= c[j])
-		{
-			a[k] = c[j];
-			j++;
-		}
-		else if (b[i] < c[j])
+		if (b[i] <= c[j])
 		{
 			a[k] = b[i];
+			i++;
+		}
+		else
+		{
+			a[k] = c[j];
 			j++;
 		}
 		k++;
