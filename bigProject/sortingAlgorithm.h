@@ -39,4 +39,6 @@ template <class T>
 void radixSort(T arr[], int n);
 template<class T>
 void bubbleSort(T arr[], int n);
+template<class T>
+void shellSort(T arr[], int n);
 #endif // !sortingAlgorithm_h
