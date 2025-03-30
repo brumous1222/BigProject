@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstring>
 template <class T>
 void reverseArray(T arr[], int n);
 template <class T>
