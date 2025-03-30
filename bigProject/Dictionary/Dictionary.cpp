@@ -79,3 +79,21 @@ void exportDict(const string &outFile, const vector<string> &dict) { // export d
     }
     output.close();
 }
+
+void loadShortenDictToArray(const string &shortenDict, string arr[], int &n) {
+    ifstream input;
+    input.open(shortenDict);
+    if (!input.is_open()) {
+        cout << "Failed to open file" << endl;
+    }
+    input >> n; // first line is len
+    input.ignore(); // skip '\n' char
+    arr = new string[n];
+    if (!arr) { // safety
+        return;
+    }
+    for (int i = 0; i < n; i++) {
+        getline(input, arr[i]); // each line is a word, read line by line
+    }
+    input.close();
+}

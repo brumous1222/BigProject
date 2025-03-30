@@ -17,5 +17,6 @@ void deleteAllSpaces(string &word);
 void toLowerCase(string &word);
 vector<string> loadDict(const string &inFile); // get all words from dictionary, put them into a vector
 void exportDict(const string &outFile, const vector<string> &dict); // export dict to file (each line is a word)
+void loadShortenDictToArray(const string &shortenDict, string arr[], int &n);
 
 #endif
