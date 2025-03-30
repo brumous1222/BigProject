@@ -18,7 +18,7 @@ void insertionSort(T arr[], int n);
 template <class T>
 void introSort(T arr[], int n);
 template <class T>
-void MergeSort(T a[],int n);
+void mergeSort(T a[],int n);
 
 template <class T>
 void selectionSort(T arr[], int n);
