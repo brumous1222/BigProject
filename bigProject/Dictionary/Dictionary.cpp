@@ -89,6 +89,7 @@ void exportDict(const string &outFile, const vector<string> &dict) // export dic
         return;
     }
     int len = dict.size();
+    output << len << endl; // added a line for len of dict array
     for (int i = 0; i < len; i++)
     {
         output << dict[i] << endl;
