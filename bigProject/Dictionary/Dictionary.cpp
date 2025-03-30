@@ -49,7 +49,7 @@ vector<string> loadDict(const string &inFile) // get all words from dictionary, 
                 {
                     continue;
                 }
-                if (word == "Usage")
+                if (word == "usage")
                 {
                     int type = line.find(SPECIAL_USAGE); // check if it is the real "Usage" word which on the line "Usage  n."
                     if (type != delimIdx)
