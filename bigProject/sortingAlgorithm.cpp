@@ -259,3 +259,4 @@ void bubbleSort(T arr[], int n) {
     }
 }
 
+template<class T>
