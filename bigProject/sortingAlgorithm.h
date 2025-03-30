@@ -30,9 +30,15 @@ int binarySearch(T arr[], int low, int high, const T &target); // modified for i
 template <class T>
 void binaryInsertionSort(T arr[], int n);
 template <class T>
-int findMax(T arr[], int n);
+int findMaxNumber(T arr[], int n);
 template <class T>
-void countingSort(T arr[], int n, int exp);
+void countingSortNumber(T arr[], int n, int exp);
 template <class T>
-void radixSort(T arr[], int n);
+void radixSortNumber(T arr[], int n);
+template <class T>
+int getMaxStrLen(T arr[][100], int n);
+template <class T>
+void countingSortStrings(T arr[][100], int n, int index);
+template <class T>
+void radixSortStrings(T arr[][100], int n);
 #endif // !sortingAlgorithm_h
