@@ -63,7 +63,7 @@ void quicksort(T arr[], int n) {
     helpquicksort(arr, 0, n - 1, maxDepth);
 }
 template<class T>
-void insertionSort(T arr[], int low, int high) {
+void helpinsertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
         T key = arr[i];
         int j = i - 1;
@@ -74,6 +74,10 @@ void insertionSort(T arr[], int low, int high) {
         }
         arr[j + 1] = key;
     }
+}
+template<class T>
+void insertionSort(T arr[], int n) {
+    insertionSort(arr, 0, n - 1);
 }
 template <class T>
 void introSort(T arr[], int n) {
