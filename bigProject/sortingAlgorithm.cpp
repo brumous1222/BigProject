@@ -273,3 +273,38 @@ void shellSort(T arr[], int n) {
         }
     }
 }
+
+template <class T>
+void naturalMergeSort(T arr[], int n) {
+    while (true) {
+        int left = 0;
+        bool sorted = true;
+
+        while (left < n) {
+            int mid = left;
+
+            while (mid + 1 < n && arr[mid] <= arr[mid + 1]) {
+                mid++;
+            }
+
+            if (mid == n - 1) {
+                break;
+            }
+
+            int right = mid + 1;
+
+            while (right + 1 < n && arr[right] <= arr[right + 1]) {
+                right++;
+            }
+
+            merge(arr, left, mid, right);
+            left = right + 1;
+
+            sorted = false;
+        }
+
+        if (sorted) {
+            break;
+        }
+    }
+}
