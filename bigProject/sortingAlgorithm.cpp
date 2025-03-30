@@ -46,24 +46,19 @@ int partition(T arr[], int low, int high) {
     return i + 1;
 }
 template<class T>
-void helpquicksort(T arr[], int low, int high, int depthLimit) {
+void helpQuickSort(T arr[], int low, int high) {
     if (low < high) {
-        if (depthLimit == 0) {
-            sort(arr + low, arr + high + 1);  
-            return;
-        }
         int pivot = partition(arr, low, high);
-        quickSort(arr, low, pivot - 1, depthLimit - 1);
-        quickSort(arr, pivot + 1, high, depthLimit - 1);
+        helpQuickSort(arr, low, pivot - 1);
+        helpQuickSort(arr, pivot + 1, high);
     }
 }
 template<class T>
-void quicksort(T arr[], int n) {
-    int maxDepth = 2 * log2(n);  
-    helpquicksort(arr, 0, n - 1, maxDepth);
+void quickSort(T arr[], int n) {
+    helpQuickSort(arr, 0, n - 1);
 }
 template<class T>
-void helpinsertionSort(T arr[], int low, int high) {
+void helpInsertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
         T key = arr[i];
         int j = i - 1;
@@ -75,15 +70,16 @@ void helpinsertionSort(T arr[], int low, int high) {
         arr[j + 1] = key;
     }
 }
+
 template<class T>
 void insertionSort(T arr[], int n) {
-    insertionSort(arr, 0, n - 1);
+    helpInsertionSort(arr, 0, n - 1);
 }
 template <class T>
 void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, 0, n - 1, depthLimit);
-    insertionSort(arr, 0, n - 1);
+    insertionSort(arr, n);
 }
 
 template <class T>
@@ -156,8 +152,7 @@ void shakerSort(T arr[], int n) { // it is like doing bubble sort in both direct
 }
 
 template<class T>
-void Merge(T a[], int left, int right, int mid)
-{
+void merge(T a[], int left, int right, int mid) {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
 	T *b = new T[n1];
@@ -195,20 +190,20 @@ void Merge(T a[], int left, int right, int mid)
 	delete[]c;
 }
 template<class T>
-void HelpMerge(T a[], int left, int right)
+void helpMerge(T a[], int left, int right)
 {
 	if (left < right)
 	{
 		int mid = left + (right-left) / 2;
-		HelpMerge(a, left, mid);
-		HelpMerge(a, mid+1, right);
-		Merge(a, left, right, mid);
+		helpMerge(a, left, mid);
+		helpMerge(a, mid+1, right);
+		merge(a, left, right, mid);
 	}
 }
 template<class T>
-void MergeSort(T a[], int n)
+void mergeSort(T a[], int n)
 {
-	HelpMerge(a, 0, n - 1);
+	helpMerge(a, 0, n - 1);
 }
 template<class T>
 int findMax(T arr[], int n) {
