@@ -71,6 +71,12 @@ void deleteAllSpaces(string &word) {
     }
 }
 
+void toLowerCase(string &word) {
+    for (int i = 0; i < word.length(); i++) {
+        word[i] = tolower(word[i]);
+    }
+}
+
 void exportDict(const string &outFile, const vector<string> &dict) // export dict to file (each line is a word)
 {
     ofstream output;
