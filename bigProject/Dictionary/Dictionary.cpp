@@ -37,6 +37,8 @@ vector<string> loadDict(const string &inFile) // get all words from dictionary, 
                 continue;
             }
             deleteAllDigits(word); // delete all digits from a word
+            deleteAllSpaces(word);
+            toLowerCase(word);
             if (word.length() <= 0) // no words
             {
                 continue;
