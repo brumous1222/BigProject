@@ -46,21 +46,16 @@ int partition(T arr[], int low, int high) {
     return i + 1;
 }
 template<class T>
-void helpQuickSort(T arr[], int low, int high, int depthLimit) {
+void helpQuickSort(T arr[], int low, int high) {
     if (low < high) {
-        if (depthLimit == 0) {
-            std::sort(arr + low, arr + high + 1);  
-            return;
-        }
         int pivot = partition(arr, low, high);
-        helpQuickSort(arr, low, pivot - 1, depthLimit - 1);
-        helpQuickSort(arr, pivot + 1, high, depthLimit - 1);
+        helpQuickSort(arr, low, pivot - 1);
+        helpQuickSort(arr, pivot + 1, high);
     }
 }
 template<class T>
 void quickSort(T arr[], int n) {
-    int maxDepth = 2 * std::log2(n);  
-    helpQuickSort(arr, 0, n - 1, maxDepth);
+    helpQuickSort(arr, 0, n - 1);
 }
 template<class T>
 void helpInsertionSort(T arr[], int low, int high) {
@@ -157,8 +152,7 @@ void shakerSort(T arr[], int n) { // it is like doing bubble sort in both direct
 }
 
 template<class T>
-void Merge(T a[], int left, int right, int mid)
-{
+void merge(T a[], int left, int right, int mid) {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
 	T *b = new T[n1];
@@ -196,20 +190,20 @@ void Merge(T a[], int left, int right, int mid)
 	delete[]c;
 }
 template<class T>
-void HelpMerge(T a[], int left, int right)
+void helpMerge(T a[], int left, int right)
 {
 	if (left < right)
 	{
 		int mid = left + (right-left) / 2;
-		HelpMerge(a, left, mid);
-		HelpMerge(a, mid+1, right);
-		Merge(a, left, right, mid);
+		helpMerge(a, left, mid);
+		helpMerge(a, mid+1, right);
+		merge(a, left, right, mid);
 	}
 }
 template<class T>
-void MergeSort(T a[], int n)
+void mergeSort(T a[], int n)
 {
-	HelpMerge(a, 0, n - 1);
+	helpMerge(a, 0, n - 1);
 }
 template<class T>
 int findMax(T arr[], int n) {
