@@ -63,6 +63,14 @@ vector<string> loadDict(const string &inFile) // get all words from dictionary, 
     return dictionary;
 }
 
+void deleteAllSpaces(string &word) {
+    while (word[0] == ' ') {
+        for (int i = 0; i < word.length(); i++) {
+            word[i] = word[i + 1];
+        }
+    }
+}
+
 void exportDict(const string &outFile, const vector<string> &dict) // export dict to file (each line is a word)
 {
     ofstream output;
