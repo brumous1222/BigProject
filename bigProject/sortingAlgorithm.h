@@ -12,9 +12,9 @@ void heapSort(T arr[], int n);
 template <class T>
 int partition(T arr[], int low, int high);
 template <class T>
-void quickSort(T arr[], int low, int high, int depthLimit);
+void quicksort(T arr[], int n);
 template <class T>
-void insertionSort(T arr[], int low, int high);
+void insertionSort(T arr[], int n);
 template <class T>
 void introSort(T arr[], int n);
 template <class T>
