@@ -224,7 +224,7 @@ int getMaxString(void *array, int n) {
     }
     return maxLen;
 }
-void sortByDigitNums(int arr[], int n, int exp) {
+void sortByDigit(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
 
@@ -248,7 +248,7 @@ void sortByDigitNums(int arr[], int n, int exp) {
     }
     delete[] output;
 }
-void sortByIndexString(void *array, int n, int index) { // using void *arr because I can not use string *
+void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
     string *arr = (string*) array; // cast to string*
     string* output= new string[n];
     int count[256] = {0};
@@ -276,14 +276,14 @@ void sortByIndexString(void *array, int n, int index) { // using void *arr becau
 void radixSortNums(int arr[], int n) {
     int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
-        sortByDigitNums(arr, n, exp);
+        sortByDigit(arr, n, exp);
     }
 }
 void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
     string *arr = (string*) array;
     int maxLen = getMaxString(arr, n);
     for (int index = maxLen - 1; index >= 0; index--) {
-        sortByIndexString(arr, n, index);
+        sortByStringIndex(arr, n, index);
     }
 }
 template<class T>
