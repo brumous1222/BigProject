@@ -31,12 +31,12 @@ void binaryInsertionSort(T arr[], int n);
 template <class T>
 void shakerSort(T arr[], int n);
 
-template <class T>
-int findMax(T arr[], int n);
-template <class T>
-void countingSort(T arr[], int n, int exp);
-template <class T>
-void radixSort(T arr[], int n);
+int findMax(int arr[], int n);
+int findMax(string arr[], int n);
+void countingSort(int arr[], int n, int exp);
+void countingSort(string arr[], int n, int index);
+void radixSort(int arr[], int n);
+void radixSort(string arr[], int n);
 template<class T>
 void bubbleSort(T arr[], int n);
 template<class T>
