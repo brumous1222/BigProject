@@ -1,4 +1,5 @@
 #include "sortingAlgorithm.h"
+#include <string>
 
 using namespace std;
 template<class T>
@@ -205,7 +206,7 @@ void mergeSort(T a[], int n)
 {
 	helpMerge(a, 0, n - 1);
 }
-int findMax(int arr[], int n) {
+int findMaxNum(int arr[], int n) {
     int maxNum = arr[0];
     for (int i = 1; i < n; i++) {
         if (arr[i] > maxNum) {
@@ -214,7 +215,8 @@ int findMax(int arr[], int n) {
     }
     return maxNum;
 }
-int findMax(string arr[], int n) {
+int getMaxString(void *array, int n) {
+    string *arr = (string*) array;
     int maxLen = 0;
     for (int i = 0; i < n; i++) {
         if (arr[i].length() > maxLen)
@@ -222,7 +224,7 @@ int findMax(string arr[], int n) {
     }
     return maxLen;
 }
-void countingSort(int arr[], int n, int exp) {
+void countingSortNums(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
 
@@ -246,7 +248,8 @@ void countingSort(int arr[], int n, int exp) {
     }
     delete[] output;
 }
-void countingSort(string arr[], int n, int exp) {
+void countingSortStrings(void *array, int n, int index) { // using void *arr because I can not use string *
+    string *arr = (string*) array; // cast to string*
     string* output= new string[n];
     int count[256] = {0};
 
@@ -270,16 +273,17 @@ void countingSort(string arr[], int n, int exp) {
     }
     delete[] output;
 }
-void radixSort(int arr[], int n) {
-    int maxNum = findMax(arr, n);
+void radixSortNums(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
-        countingSort(arr, n, exp);
+        countingSortNums(arr, n, exp);
     }
 }
-void radixSort(string arr[], int n) {
-    int maxLen = getMax(arr, n);
+void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
+    string *arr = (string*) array;
+    int maxLen = getMaxString(arr, n);
     for (int index = maxLen - 1; index >= 0; index--) {
-        countingSort(arr, n, index);
+        countingSortStrings(arr, n, index);
     }
 }
 template<class T>
