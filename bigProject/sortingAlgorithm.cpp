@@ -205,8 +205,7 @@ void mergeSort(T a[], int n)
 {
 	helpMerge(a, 0, n - 1);
 }
-template<class T>
-int findMax(T arr[], int n) {
+int findMax(int arr[], int n) {
     int maxNum = arr[0];
     for (int i = 1; i < n; i++) {
         if (arr[i] > maxNum) {
@@ -215,8 +214,15 @@ int findMax(T arr[], int n) {
     }
     return maxNum;
 }
-template<class T>
-void countingSort(T arr[], int n, int exp) {
+int findMax(string arr[], int n) {
+    int maxLen = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i].length() > maxLen)
+            maxLen = arr[i].length();
+    }
+    return maxLen;
+}
+void countingSort(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
 
@@ -240,12 +246,40 @@ void countingSort(T arr[], int n, int exp) {
     }
     delete[] output;
 }
-template<class T>
-void radixSort(T arr[], int n) {
-    int maxNum = findMax(arr, n);
+void countingSort(string arr[], int n, int exp) {
+    string* output= new string[n];
+    int count[256] = {0};
 
+    for (int i = 0; i < n; i++) {
+        char ch = (arr[i].length() > index) ? arr[i][index] : 0;
+        count[ch]++;
+    }
+
+    for (int i = 1; i < 256; i++) {
+        count[i] += count[i - 1];
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        char ch = (arr[i].length() > index) ? arr[i][index] : 0;
+        output[count[ch] - 1] = arr[i];
+        count[ch]--;
+    }
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+    delete[] output;
+}
+void radixSort(int arr[], int n) {
+    int maxNum = findMax(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
         countingSort(arr, n, exp);
+    }
+}
+void radixSort(string arr[], int n) {
+    int maxLen = getMax(arr, n);
+    for (int index = maxLen - 1; index >= 0; index--) {
+        countingSort(arr, n, index);
     }
 }
 template<class T>
