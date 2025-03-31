@@ -224,6 +224,32 @@ int getMaxString(void *array, int n) {
     }
     return maxLen;
 }
+void countingSort(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
+    int *counting = new int [maxNum + 1]; // create an array to store frequency of each num
+    for (int i = 0; i < n; i++) { // update counting
+        counting[arr[i]]++;
+    }
+    int currPrefixSum = 0;
+    for (int i = 0; i <= maxNum; i++) { // use prefixSum to make counting[i] represent for end idx of it in sorted arr
+        currPrefixSum += counting[i];
+        counting[i] = currPrefixSum;
+    }
+
+    for (int i = maxNum; i > 0; i--) { // shift to right one cell, make counting[i] represents for it's begin idx in sorted arr
+        counting[i] = counting[i - 1];
+    }
+    counting[0] = 0;
+    int *res = new int[n]; // create an array to store the result
+    for (int i = 0; i < n; i++) // sort the nums
+    {
+        res[counting[arr[i]++]] = arr[i];
+    }
+    for(int i = 0; i < n; i++) // copy result array to arr
+    {
+        arr[i] = res[i];
+    }
+}
 void sortByDigit(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
@@ -280,7 +306,7 @@ void radixSortNums(int arr[], int n) {
     }
 }
 void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
-    string *arr = (string*) array;
+    string *arr = (string*) array; // cast to string*
     int maxLen = getMaxString(arr, n);
     for (int index = maxLen - 1; index >= 0; index--) {
         sortByStringIndex(arr, n, index);
