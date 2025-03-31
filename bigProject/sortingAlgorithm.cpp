@@ -216,7 +216,7 @@ int findMaxNum(int arr[], int n) {
     return maxNum;
 }
 int getMaxString(void *array, int n) {
-    string *arr = (string*) array;
+    wstring *arr = (wstring*) array;
     int maxLen = 0;
     for (int i = 0; i < n; i++) {
         if (arr[i].length() > maxLen)
@@ -275,21 +275,21 @@ void sortByDigit(int arr[], int n, int exp) {
     delete[] output;
 }
 void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
-    string *arr = (string*) array; // cast to string*
-    string* output= new string[n];
-    int count[256] = {0};
+    wstring *arr = (wstring*) array; // cast to string*
+    wstring* output= new wstring[n];
+    int count[65536] = {0};
 
     for (int i = 0; i < n; i++) {
-        char ch = (arr[i].length() > index) ? arr[i][index] : 0;
+        wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
         count[ch]++;
     }
 
-    for (int i = 1; i < 256; i++) {
+    for (int i = 1; i < 65536; i++) {
         count[i] += count[i - 1];
     }
 
     for (int i = n - 1; i >= 0; i--) {
-        char ch = (arr[i].length() > index) ? arr[i][index] : 0;
+        wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
         output[count[ch] - 1] = arr[i];
         count[ch]--;
     }
@@ -306,7 +306,7 @@ void radixSortNums(int arr[], int n) {
     }
 }
 void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
-    string *arr = (string*) array; // cast to string*
+    wstring *arr = (wstring*) array; // cast to string*
     int maxLen = getMaxString(arr, n);
     for (int index = maxLen - 1; index >= 0; index--) {
         sortByStringIndex(arr, n, index);
