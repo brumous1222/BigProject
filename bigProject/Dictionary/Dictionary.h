@@ -8,6 +8,7 @@
 
 // delim in dictionary
 #define DELIM "  "
+#define USAGE "usage"
 #define SPECIAL_USAGE "  n."
 
 using namespace std;
