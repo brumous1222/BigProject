@@ -85,8 +85,11 @@ void loadShortenDictToArray(const string &shortenDict, string arr[], int &n) {
     input.open(shortenDict);
     if (!input.is_open()) {
         cout << "Failed to open file" << endl;
+        return;
     }
-    input >> n; // first line is len
+    if (!(input >> n)) { // safety
+        return;
+    }
     input.ignore(); // skip '\n' char
     arr = new string[n];
     if (!arr) { // safety
