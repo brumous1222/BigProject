@@ -1,4 +1,5 @@
 #include "sortingAlgorithm.h"
+#include <string>
 
 using namespace std;
 template<class T>
@@ -205,8 +206,7 @@ void mergeSort(T a[], int n)
 {
 	helpMerge(a, 0, n - 1);
 }
-template<class T>
-int findMax(T arr[], int n) {
+int findMaxNum(int arr[], int n) {
     int maxNum = arr[0];
     for (int i = 1; i < n; i++) {
         if (arr[i] > maxNum) {
@@ -215,8 +215,42 @@ int findMax(T arr[], int n) {
     }
     return maxNum;
 }
-template<class T>
-void countingSort(T arr[], int n, int exp) {
+int getMaxString(void *array, int n) {
+    wstring *arr = (wstring*) array;
+    int maxLen = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i].length() > maxLen)
+            maxLen = arr[i].length();
+    }
+    return maxLen;
+}
+void countingSort(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
+    int *counting = new int [maxNum + 1]; // create an array to store frequency of each num
+    for (int i = 0; i < n; i++) { // update counting
+        counting[arr[i]]++;
+    }
+    int currPrefixSum = 0;
+    for (int i = 0; i <= maxNum; i++) { // use prefixSum to make counting[i] represent for end idx of it in sorted arr
+        currPrefixSum += counting[i];
+        counting[i] = currPrefixSum;
+    }
+
+    for (int i = maxNum; i > 0; i--) { // shift to right one cell, make counting[i] represents for it's begin idx in sorted arr
+        counting[i] = counting[i - 1];
+    }
+    counting[0] = 0;
+    int *res = new int[n]; // create an array to store the result
+    for (int i = 0; i < n; i++) // sort the nums
+    {
+        res[counting[arr[i]++]] = arr[i];
+    }
+    for(int i = 0; i < n; i++) // copy result array to arr
+    {
+        arr[i] = res[i];
+    }
+}
+void sortByDigit(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
 
@@ -240,14 +274,44 @@ void countingSort(T arr[], int n, int exp) {
     }
     delete[] output;
 }
-template<class T>
-void radixSort(T arr[], int n) {
-    int maxNum = findMax(arr, n);
+// void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     wstring* output= new wstring[n];
+//     int count[65536] = {0};
 
+//     for (int i = 0; i < n; i++) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         count[ch]++;
+//     }
+
+//     for (int i = 1; i < 65536; i++) {
+//         count[i] += count[i - 1];
+//     }
+
+//     for (int i = n - 1; i >= 0; i--) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         output[count[ch] - 1] = arr[i];
+//         count[ch]--;
+//     }
+
+//     for (int i = 0; i < n; i++) {
+//         arr[i] = output[i];
+//     }
+//     delete[] output;
+// }
+void radixSort(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
-        countingSort(arr, n, exp);
+        sortByDigit(arr, n, exp);
     }
 }
+// void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     int maxLen = getMaxString(arr, n);
+//     for (int index = maxLen - 1; index >= 0; index--) {
+//         sortByStringIndex(arr, n, index);
+//     }
+// }
 template<class T>
 void bubbleSort(T arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
