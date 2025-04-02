@@ -299,7 +299,7 @@ void sortByDigit(int arr[], int n, int exp) {
 //     }
 //     delete[] output;
 // }
-void radixSortNums(int arr[], int n) {
+void radixSort(int arr[], int n) {
     int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
         sortByDigit(arr, n, exp);
