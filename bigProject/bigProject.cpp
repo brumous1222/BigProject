@@ -1,5 +1,7 @@
 #include "sortingAlgorithm.h"
 #include "generateArrays.h"
+#include "sortinAlgorithm.cpp"
+#include "generateArrays.cpp"
 
 using namespace std;
 
