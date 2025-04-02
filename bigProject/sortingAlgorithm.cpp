@@ -2,7 +2,8 @@
 #include <string>
 
 using namespace std;
-template<class T>
+
+template <class T>
 void heapify(T arr[], int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
@@ -21,7 +22,8 @@ void heapify(T arr[], int n, int i) {
         heapify(arr, n, largest);
     }
 }
-template<class T>
+
+template <class T>
 void heapSort(T arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
@@ -32,7 +34,8 @@ void heapSort(T arr[], int n) {
         heapify(arr, i, 0);
     }
 }
-template<class T>
+
+template <class T>
 int partition(T arr[], int low, int high) {
     T pivot = arr[high]; 
     int i = low - 1;
@@ -46,7 +49,8 @@ int partition(T arr[], int low, int high) {
     swap(arr[i + 1], arr[high]);
     return i + 1;
 }
-template<class T>
+
+template <class T>
 void helpQuickSort(T arr[], int low, int high) {
     if (low < high) {
         int pivot = partition(arr, low, high);
@@ -54,11 +58,13 @@ void helpQuickSort(T arr[], int low, int high) {
         helpQuickSort(arr, pivot + 1, high);
     }
 }
-template<class T>
+
+template <class T>
 void quickSort(T arr[], int n) {
     helpQuickSort(arr, 0, n - 1);
 }
-template<class T>
+
+template <class T>
 void helpInsertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
         T key = arr[i];
@@ -72,7 +78,7 @@ void helpInsertionSort(T arr[], int low, int high) {
     }
 }
 
-template<class T>
+template <class T>
 void insertionSort(T arr[], int n) {
     helpInsertionSort(arr, 0, n - 1);
 }
@@ -152,7 +158,7 @@ void shakerSort(T arr[], int n) { // it is like doing bubble sort in both direct
     }
 }
 
-template<class T>
+template <class T>
 void merge(T a[], int left, int right, int mid) {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
@@ -190,7 +196,8 @@ void merge(T a[], int left, int right, int mid) {
 	delete[]b;
 	delete[]c;
 }
-template<class T>
+
+template <class T>
 void helpMerge(T a[], int left, int right)
 {
 	if (left < right)
@@ -201,7 +208,8 @@ void helpMerge(T a[], int left, int right)
 		merge(a, left, right, mid);
 	}
 }
-template<class T>
+
+template <class T>
 void mergeSort(T a[], int n)
 {
 	helpMerge(a, 0, n - 1);
@@ -224,6 +232,7 @@ int getMaxString(void *array, int n) {
     }
     return maxLen;
 }
+
 void countingSort(int arr[], int n) {
     int maxNum = findMaxNum(arr, n);
     int *counting = new int [maxNum + 1]; // create an array to store frequency of each num
@@ -250,6 +259,7 @@ void countingSort(int arr[], int n) {
         arr[i] = res[i];
     }
 }
+
 void sortByDigit(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
@@ -274,6 +284,7 @@ void sortByDigit(int arr[], int n, int exp) {
     }
     delete[] output;
 }
+
 // void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
 //     wstring *arr = (wstring*) array; // cast to string*
 //     wstring* output= new wstring[n];
@@ -299,6 +310,7 @@ void sortByDigit(int arr[], int n, int exp) {
 //     }
 //     delete[] output;
 // }
+
 void radixSort(int arr[], int n) {
     int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
@@ -312,7 +324,8 @@ void radixSort(int arr[], int n) {
 //         sortByStringIndex(arr, n, index);
 //     }
 // }
-template<class T>
+
+template <class T>
 void bubbleSort(T arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
@@ -323,7 +336,7 @@ void bubbleSort(T arr[], int n) {
     }
 }
 
-template<class T>
+template <class T>
 void shellSort(T arr[], int n) {
     for (int gap = n / 2; gap > 0; gap /= 2)
     {
