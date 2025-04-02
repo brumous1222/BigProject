@@ -274,44 +274,44 @@ void sortByDigit(int arr[], int n, int exp) {
     }
     delete[] output;
 }
-void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
-    wstring *arr = (wstring*) array; // cast to string*
-    wstring* output= new wstring[n];
-    int count[65536] = {0};
+// void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     wstring* output= new wstring[n];
+//     int count[65536] = {0};
 
-    for (int i = 0; i < n; i++) {
-        wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
-        count[ch]++;
-    }
+//     for (int i = 0; i < n; i++) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         count[ch]++;
+//     }
 
-    for (int i = 1; i < 65536; i++) {
-        count[i] += count[i - 1];
-    }
+//     for (int i = 1; i < 65536; i++) {
+//         count[i] += count[i - 1];
+//     }
 
-    for (int i = n - 1; i >= 0; i--) {
-        wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
-        output[count[ch] - 1] = arr[i];
-        count[ch]--;
-    }
+//     for (int i = n - 1; i >= 0; i--) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         output[count[ch] - 1] = arr[i];
+//         count[ch]--;
+//     }
 
-    for (int i = 0; i < n; i++) {
-        arr[i] = output[i];
-    }
-    delete[] output;
-}
+//     for (int i = 0; i < n; i++) {
+//         arr[i] = output[i];
+//     }
+//     delete[] output;
+// }
 void radixSortNums(int arr[], int n) {
     int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
         sortByDigit(arr, n, exp);
     }
 }
-void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
-    wstring *arr = (wstring*) array; // cast to string*
-    int maxLen = getMaxString(arr, n);
-    for (int index = maxLen - 1; index >= 0; index--) {
-        sortByStringIndex(arr, n, index);
-    }
-}
+// void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     int maxLen = getMaxString(arr, n);
+//     for (int index = maxLen - 1; index >= 0; index--) {
+//         sortByStringIndex(arr, n, index);
+//     }
+// }
 template<class T>
 void bubbleSort(T arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
