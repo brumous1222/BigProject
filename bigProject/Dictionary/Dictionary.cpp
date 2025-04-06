@@ -80,7 +80,7 @@ void exportDict(const string &outFile, const vector<string> &dict) { // export d
     output.close();
 }
 
-void loadShortenDictToArray(const string &shortenDict, string arr[], int &n) {
+void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n) {
     ifstream input;
     input.open(shortenDict);
     if (!input.is_open()) {
@@ -99,4 +99,24 @@ void loadShortenDictToArray(const string &shortenDict, string arr[], int &n) {
         getline(input, arr[i]); // each line is a word, read line by line
     }
     input.close();
+}
+
+void generateRandom(const string dict[], const int &n, string *&arr, int &len, const int &randomLen) {
+    srand((unsigned)time(NULL));
+    arr = new string[randomLen];
+    if (!arr) {
+        cout << "Failed on creating array" << endl;
+        return;
+    }
+    len = randomLen;
+    for (int i = 0; i < randomLen; i++) {
+        int randIdx = rand() % (n - 1);
+        arr[i] = dict[randIdx];
+    }
+}
+
+void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen) {
+    generateRandom(dict, n, arr, len, sortedLen);
+    // insertionSort(arr, 0, len - 1);
+    mergeSort(arr, len);
 }

@@ -1,7 +1,9 @@
 #include "sortingAlgorithm.h"
+#include <string>
 
 using namespace std;
-template<class T>
+
+template <class T>
 void heapify(T arr[], int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
@@ -20,7 +22,8 @@ void heapify(T arr[], int n, int i) {
         heapify(arr, n, largest);
     }
 }
-template<class T>
+
+template <class T>
 void heapSort(T arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--) {
         heapify(arr, n, i);
@@ -31,9 +34,10 @@ void heapSort(T arr[], int n) {
         heapify(arr, i, 0);
     }
 }
-template<class T>
+
+template <class T>
 int partition(T arr[], int low, int high) {
-    int pivot = arr[high];
+    T pivot = arr[high]; 
     int i = low - 1;
 
     for (int j = low; j < high; j++) {
@@ -45,23 +49,25 @@ int partition(T arr[], int low, int high) {
     swap(arr[i + 1], arr[high]);
     return i + 1;
 }
-template <class T>
-void quickSort(T arr[], int low, int high, int depthLimit) {
-    if (low < high) {
-        if (depthLimit == 0) {
-            heapSort(arr + low, high - low + 1);
-            return;
-        }
 
+template <class T>
+void helpQuickSort(T arr[], int low, int high) {
+    if (low < high) {
         int pivot = partition(arr, low, high);
-        quickSort(arr, low, pivot - 1, depthLimit - 1);
-        quickSort(arr, pivot + 1, high, depthLimit - 1);
+        helpQuickSort(arr, low, pivot - 1);
+        helpQuickSort(arr, pivot + 1, high);
     }
 }
-template<class T>
-void insertionSort(T arr[], int low, int high) {
+
+template <class T>
+void quickSort(T arr[], int n) {
+    helpQuickSort(arr, 0, n - 1);
+}
+
+template <class T>
+void helpInsertionSort(T arr[], int low, int high) {
     for (int i = low + 1; i <= high; i++) {
-        int key = arr[i];
+        T key = arr[i];
         int j = i - 1;
 
         while (j >= low && arr[j] > key) {
@@ -71,11 +77,16 @@ void insertionSort(T arr[], int low, int high) {
         arr[j + 1] = key;
     }
 }
+
+template <class T>
+void insertionSort(T arr[], int n) {
+    helpInsertionSort(arr, 0, n - 1);
+}
 template <class T>
 void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, 0, n - 1, depthLimit);
-    insertionSort(arr, 0, n - 1);
+    insertionSort(arr, n);
 }
 
 template <class T>
@@ -147,9 +158,8 @@ void shakerSort(T arr[], int n) { // it is like doing bubble sort in both direct
     }
 }
 
-template<class T>
-void Merge(T a[], int left, int right, int mid)
-{
+template <class T>
+void merge(T a[], int left, int right, int mid) {
 	int n1 = mid - left + 1;
 	int n2 = right - mid;
 	T *b = new T[n1];
@@ -186,24 +196,25 @@ void Merge(T a[], int left, int right, int mid)
 	delete[]b;
 	delete[]c;
 }
-template<class T>
-void HelpMerge(T a[], int left, int right)
+
+template <class T>
+void helpMerge(T a[], int left, int right)
 {
 	if (left < right)
 	{
 		int mid = left + (right-left) / 2;
-		HelpMerge(a, left, mid);
-		HelpMerge(a, mid+1, right);
-		Merge(a, left, right, mid);
+		helpMerge(a, left, mid);
+		helpMerge(a, mid+1, right);
+		merge(a, left, right, mid);
 	}
 }
-template<class T>
-void MergeSort(T a[], int n)
+
+template <class T>
+void mergeSort(T a[], int n)
 {
-	HelpMerge(a, 0, n - 1);
+	helpMerge(a, 0, n - 1);
 }
-template<class T>
-int findMax(T arr[], int n) {
+int findMaxNum(int arr[], int n) {
     int maxNum = arr[0];
     for (int i = 1; i < n; i++) {
         if (arr[i] > maxNum) {
@@ -212,8 +223,44 @@ int findMax(T arr[], int n) {
     }
     return maxNum;
 }
-template<class T>
-void countingSort(T arr[], int n, int exp) {
+int getMaxString(void *array, int n) {
+    wstring *arr = (wstring*) array;
+    int maxLen = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i].length() > maxLen)
+            maxLen = arr[i].length();
+    }
+    return maxLen;
+}
+
+void countingSort(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
+    int *counting = new int [maxNum + 1]; // create an array to store frequency of each num
+    for (int i = 0; i < n; i++) { // update counting
+        counting[arr[i]]++;
+    }
+    int currPrefixSum = 0;
+    for (int i = 0; i <= maxNum; i++) { // use prefixSum to make counting[i] represent for end idx of it in sorted arr
+        currPrefixSum += counting[i];
+        counting[i] = currPrefixSum;
+    }
+
+    for (int i = maxNum; i > 0; i--) { // shift to right one cell, make counting[i] represents for it's begin idx in sorted arr
+        counting[i] = counting[i - 1];
+    }
+    counting[0] = 0;
+    int *res = new int[n]; // create an array to store the result
+    for (int i = 0; i < n; i++) // sort the nums
+    {
+        res[counting[arr[i]++]] = arr[i];
+    }
+    for(int i = 0; i < n; i++) // copy result array to arr
+    {
+        arr[i] = res[i];
+    }
+}
+
+void sortByDigit(int arr[], int n, int exp) {
     int* output = new int[n];
     int count[10] = {0};  
 
@@ -237,11 +284,104 @@ void countingSort(T arr[], int n, int exp) {
     }
     delete[] output;
 }
-template<class T>
-void radixSort(T arr[], int n) {
-    int maxNum = findMax(arr, n);
 
+// void sortByStringIndex(void *array, int n, int index) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     wstring* output= new wstring[n];
+//     int count[65536] = {0};
+
+//     for (int i = 0; i < n; i++) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         count[ch]++;
+//     }
+
+//     for (int i = 1; i < 65536; i++) {
+//         count[i] += count[i - 1];
+//     }
+
+//     for (int i = n - 1; i >= 0; i--) {
+//         wchar_t ch = (arr[i].length() > index) ? arr[i][arr[i].length() - 1 - index] : 0;
+//         output[count[ch] - 1] = arr[i];
+//         count[ch]--;
+//     }
+
+//     for (int i = 0; i < n; i++) {
+//         arr[i] = output[i];
+//     }
+//     delete[] output;
+// }
+
+void radixSort(int arr[], int n) {
+    int maxNum = findMaxNum(arr, n);
     for (int exp = 1; maxNum / exp > 0; exp *= 10) {
-        countingSort(arr, n, exp);
+        sortByDigit(arr, n, exp);
+    }
+}
+// void radixSortStrings(void *array, int n) { // using void *arr because I can not use string *
+//     wstring *arr = (wstring*) array; // cast to string*
+//     int maxLen = getMaxString(arr, n);
+//     for (int index = maxLen - 1; index >= 0; index--) {
+//         sortByStringIndex(arr, n, index);
+//     }
+// }
+
+template <class T>
+void bubbleSort(T arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+template <class T>
+void shellSort(T arr[], int n) {
+    for (int gap = n / 2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < n; i += 1)
+        {
+            T temp = arr[i];
+            int j;
+            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+                arr[j] = arr[j - gap];
+            arr[j] = temp;
+        }
+    }
+}
+
+template <class T>
+void naturalMergeSort(T arr[], int n) {
+    while (true) {
+        int left = 0;
+        bool sorted = true;
+
+        while (left < n) {
+            int mid = left;
+
+            while (mid + 1 < n && arr[mid] <= arr[mid + 1]) {
+                mid++;
+            }
+
+            if (mid == n - 1) {
+                break;
+            }
+
+            int right = mid + 1;
+
+            while (right + 1 < n && arr[right] <= arr[right + 1]) {
+                right++;
+            }
+
+            merge(arr, left, mid, right);
+            left = right + 1;
+
+            sorted = false;
+        }
+
+        if (sorted) {
+            break;
+        }
     }
 }

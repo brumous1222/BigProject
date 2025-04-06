@@ -5,6 +5,10 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <ctime>
+#include <stdlib.h>
+#include "../sortingAlgorithm.h"
+#include "../sortingAlgorithm.cpp"
 
 // delim in dictionary
 #define DELIM "  "
@@ -18,6 +22,9 @@ void deleteAllSpaces(string &word);
 void toLowerCase(string &word);
 vector<string> loadDict(const string &inFile); // get all words from dictionary, put them into a vector
 void exportDict(const string &outFile, const vector<string> &dict); // export dict to file (each line is a word)
-void loadShortenDictToArray(const string &shortenDict, string arr[], int &n);
+// void loadShortenDictToArray(const string &shortenDict, string arr[], int &n);
+void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n);
+void generateRandom(const string dict[], const int &n,  string *&arr, int &len, const int &randomLen);
+void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen);
 
 #endif
