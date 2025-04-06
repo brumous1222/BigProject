@@ -1,4 +1,6 @@
 #include "Dictionary.h"
+#include "../sortingAlgorithm.h"
+#include "../sortingAlgorithm.cpp"
 
 void deleteAllDigits(string &word) {
     int len = word.length();
@@ -117,6 +119,36 @@ void generateRandom(const string dict[], const int &n, string *&arr, int &len, c
 
 void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen) {
     generateRandom(dict, n, arr, len, sortedLen);
-    // insertionSort(arr, 0, len - 1);
     mergeSort(arr, len);
+}
+
+void generateNearlySorted(const string dict[], const int &n, string *&arr, int &len, const int &nearlyLen) {
+    srand((unsigned)time(NULL));
+    int sortedLen = 0.8 * nearlyLen;
+    len = nearlyLen;
+    arr = new string[nearlyLen];
+    if (!arr) {
+        cout << "Failed in creating array" << endl;
+        return;
+    }
+    for (int i = 0; i < sortedLen; i++) {
+        arr[i] = dict[rand() % n];
+    }
+    mergeSort(arr, sortedLen);
+    for (int i = sortedLen; i < nearlyLen; i++) {
+        arr[i] = dict[rand() % n];
+    }
+    for (int i = 0; i < len; i++) {
+        cout << arr[i] << endl;
+    }
+}
+
+void generateReversed(const string dict[], const int &n, string *&arr, int &len, const int &reverseLen) {
+    generateSorted(dict, n, arr, len, reverseLen);
+    for (int i = 0; i < len / 2; i++) {
+        swap(arr[i], arr[len - i - 1]);
+    }
+    for (int i = 0; i < len; i++) {
+        cout << arr[i] << endl;
+    }
 }

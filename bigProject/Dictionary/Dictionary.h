@@ -7,8 +7,6 @@
 #include <iostream>
 #include <ctime>
 #include <stdlib.h>
-#include "../sortingAlgorithm.h"
-#include "../sortingAlgorithm.cpp"
 
 // delim in dictionary
 #define DELIM "  "
@@ -26,5 +24,7 @@ void exportDict(const string &outFile, const vector<string> &dict); // export di
 void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n);
 void generateRandom(const string dict[], const int &n,  string *&arr, int &len, const int &randomLen);
 void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen);
+void generateNearlySorted(const string dict[], const int &n, string *&arr, int &len, const int &nearlyLen);
+void generateReversed(const string dict[], const int &n, string *&arr, int &len, const int &reverseLen);
 
 #endif
