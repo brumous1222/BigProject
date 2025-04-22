@@ -1,5 +1,4 @@
 #include "generateArrays.h"
-#include "sortingAlgorithm.h"
 
 using namespace std;
 using namespace chrono;
@@ -31,7 +30,8 @@ void reverseArray(T arr[], int n) {
 
 template <class T>
 void generateRandomArray(T arr[], int n, int k) {
-	if (k <= 1000000000) {
+	const int MIN_VAL = 1e9;
+	if (k <= MIN_VAL) {
 		cout << "The maximum value of k must be greater than 10^9\n";
 		return;
 	}
@@ -46,7 +46,8 @@ void generateRandomArray(T arr[], int n, int k) {
 template <class T>
 void generateSortedArray(T arr[], int n, int k) {
 	generateRandomArray(arr, n, k);
-	introSort(arr, n);
+	// introSort(arr, n);
+	mergeSort(arr, n);
 }
 
 template <class T>
@@ -58,30 +59,31 @@ void generateReverseArray(T arr[], int n, int k) {
 template <class T>
 void generateNearlySortedArray(T arr[], int n, int k) {
 	generateSortedArray(arr, n, k);
-	int swapCount = max(1, n / 10); //So lan trao doi (10% cua n)
+	int swapCount = max(1, n / 10); // swap counts (10% of n)
 
 	srand((unsigned)time(NULL));
 	for (int i = 0; i < swapCount; ++i) {
-		int idx1 = rand() % n; // Chon ngau nhien chi so thu nhat
-		int idx2 = rand() % n; // Chon ngau nhien chi so thu hai
+		int idx1 = rand() % n; //  pick randomly first idx
+		int idx2 = rand() % n; // pick randomly second idx;
 		swap(arr[idx1], arr[idx2]);
 	}
 }
 
 template <class T>
-void generateData(T arr[], int n, int inputType) {
-	switch (inputType) {
+void generateData(T arr[], int n, const int order) {
+	const int MIN_VAL = 2e9;
+	switch (order) {
 	case 0:
-		generateRandomArray(arr, n, 2000000000);
+		generateRandomArray(arr, n, MIN_VAL);
 		break;
 	case 1:
-		generateSortedArray(arr, n, 2000000000);
+		generateSortedArray(arr, n, MIN_VAL);
 		break;
 	case 2:
-		generateReverseArray(arr, n, 2000000000);
+		generateReverseArray(arr, n, MIN_VAL);
 		break;
 	case 3:
-		generateNearlySortedArray(arr, n, 2000000000);
+		generateNearlySortedArray(arr, n, MIN_VAL);
 		break;
 	default:
 		cout << ("Error: unknown input type!\n");
@@ -89,7 +91,8 @@ void generateData(T arr[], int n, int inputType) {
 }
 
 template <class T>
-void outputResulttoFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n, const string& algoName, const string& inputType) {
+void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n,
+						const string& algoName, const string& order) {
 	ofstream out;
 	if (!outputFile.empty()) {
 		out.open(outputFile, ios::app);
@@ -109,7 +112,7 @@ void outputResulttoFile(const string& outputFile, void (*sortFunc)(T[], int), T 
 	auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
 
 	string output = "Algorithm: " + algoName + "\n" +
-		"Input Type: " + inputType + "\n" +
+		"Input Type: " + order + "\n" +
 		"Input Size: " + to_string(n) + "\n" +
 		"Execution Time: " + to_string(duration.count()) + " ms\n" +
 		"-------------------------\n";
