@@ -8,14 +8,30 @@
 
 using namespace std;
 
-bool isSorted(int arr[], int n);
-void reverseArray(int arr[], int n);
+template <class T>
+bool isSorted(T arr[], int n);
 
-void generateRandomArray(int arr[], int n, int k);
-void generateSortedArray(int arr[], int n, int k);
-void generateReverseArray(int arr[], int n, int k);
-void generateNearlySortedArray(int arr[], int n, int k);
+template <class T>
+void reverseArray(T arr[], int n);
 
-typedef void(*sortFunc)(int arr[], int n);
-void measureSortingTime(sortFunc sortName, int arr[], int n, const string& algoName, const string& inputType);
+template <class T>
+void generateRandomArray(T arr[], int n, int k);
+
+template <class T>
+void generateSortedArray(T arr[], int n, int k);
+
+template <class T>
+void generateReverseArray(T arr[], int n, int k);
+
+template <class T>
+void generateNearlySortedArray(T arr[], int n, int k);
+
+template <class T>
+typedef void(*sortFunc)(T arr[], int n);
+
+template <class T>
+void generateData(T arr[], int n, int inputType);
+
+template <class T>
+void outputResulttoFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n, const string& algoName, const string& inputType)
 #endif // !generateArrays.h
