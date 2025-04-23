@@ -59,29 +59,6 @@ void helpQuickSort(T arr[], int low, int high) {
     }
 }
 
-void threeWayPartition(int arr[], int n, int low, int high, int& lt, int& gt) {
-
-    int pivot = arr[low];
-    lt = low;
-    gt = high;
-    int i = low + 1;
-
-    while (i <= gt) {
-        if (arr[i] < pivot) {
-            swap(arr[lt], arr[i]);
-            lt++;
-            i++;
-        }
-        else if (arr[i] > pivot) {
-            swap(arr[i], arr[gt]);
-            gt--;
-        }
-        else {
-            i++;
-        }
-    }
-}
-
 template <class T>
 void quickSort(T arr[], int n) {
     helpQuickSort(arr, 0, n - 1);
@@ -104,14 +81,17 @@ void helpInsertionSort(T arr[], int low, int high) {
 template <class T>
 void insertionSort(T arr[], int n) {
     helpInsertionSort(arr, 0, n - 1);
+template <class T>
+void insertionSort(T arr[], int n) {
+    helpInsertionSort(arr, 0, n - 1);
+}
+template <class T>
+void introSort(T arr[], int n) {
+    int depthLimit = 2 * log(n);
+    quickSort(arr, depthLimit);
+    insertionSort(arr, n);
 }
 
-// template <class T>
-// void introSort(T arr[], int n) {
-//     int depthLimit = 2 * log(n);
-//     quickSort(arr, 0, n - 1, depthLimit);
-//     insertionSort(arr, n);
-// }
 
 template <class T>
 void selectionSort(T arr[], int n) {

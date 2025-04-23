@@ -30,6 +30,7 @@ void reverseArray(T arr[], int n) {
 
 template <class T>
 void generateRandomArray(T arr[], int n, int k) {
+
 	const int MIN_VAL = 1e9;
 	if (k <= MIN_VAL) {
 		cout << "The maximum value of k must be greater than 10^9\n";
@@ -102,6 +103,7 @@ void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T 
 		}
 	}
 
+void measureSortingTime(sortFunc sortName, T arr[], int n, const string& algoName, const string& inputType) {
 	T* tempArr = new T[n];
 	copy(arr, arr + n, tempArr);
 

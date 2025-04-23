@@ -19,8 +19,8 @@ void quickSort(T arr[], int n);
 template <class T>
 void insertionSort(T arr[], int n);
 
-// template <class T>
-// void introSort(T arr[], int n);
+template <class T>
+void introSort(T arr[], int n);
 
 template <class T>
 void mergeSort(T a[],int n);
