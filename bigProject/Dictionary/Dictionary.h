@@ -22,9 +22,9 @@ vector<string> loadDict(const string &inFile); // get all words from dictionary,
 void exportDict(const string &outFile, const vector<string> &dict); // export dict to file (each line is a word)
 // void loadShortenDictToArray(const string &shortenDict, string arr[], int &n);
 void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n);
-void generateRandom(const string dict[], const int &n,  string *&arr, int &len, const int &randomLen);
-void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen);
-void generateNearlySorted(const string dict[], const int &n, string *&arr, int &len, const int &nearlyLen);
-void generateReversed(const string dict[], const int &n, string *&arr, int &len, const int &reverseLen);
+void generateRandom(const string dict[], const int &dictLen,  string *&arr, const int &arrLen);
+void generateSorted(const string dict[], const int &dictLen, string *&arr, const int &arrLen);
+void generateNearlySorted(const string dict[], const int &dictLen, string *&arr, const int &arrLen);
+void generateReversed(const string dict[], const int &dictLen, string *&arr, const int &arrLen);
 
 #endif

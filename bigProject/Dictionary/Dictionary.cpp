@@ -2,7 +2,20 @@
 #include "../sortingAlgorithm.h"
 #include "../sortingAlgorithm.cpp"
 
-void deleteAllDigits(string &word) {
+void insertionSort(vector<string> &arr) { // because this dictionary is nearly sorted (dictionary order), to convert it to cpp order, insertion sort is a great choice
+    int len = arr.size();
+    for (int i = 1; i < len; i++) {
+        int j = i;
+        string currString = arr[i];
+        while (j > 0 && arr[j - 1] > currString) {
+            arr[j] = arr[j - 1];
+            j--;
+        }
+        arr[j] = currString;
+    }
+}
+
+void deleteAllDigits(string &word) { // delete all the digit at the beginning of a string
     int len = word.length();
     if (len <= 0) {
         return;
@@ -39,7 +52,7 @@ vector<string> loadDict(const string &inFile) { // get all words from dictionary
                 if (word == dictionary[dictionary.size() - 1]) { // check if it is duplicated
                     continue;
                 }
-                if (word == USAGE) { // special case "usage"
+                if (word == USAGE) { // special case, the word "usage"
                     int type = line.find(SPECIAL_USAGE); // check if it is the real "Usage" word which on the line "Usage  n."
                     if (type != delimIdx) {
                         continue;
@@ -50,10 +63,12 @@ vector<string> loadDict(const string &inFile) { // get all words from dictionary
         }
     }
     input.close();
+    // sort(dictionary.begin(), dictionary.end());
+    insertionSort(dictionary);
     return dictionary;
 }
 
-void deleteAllSpaces(string &word) {
+void deleteAllSpaces(string &word) { // delete all space from the beginning of a string
     while (word[0] == ' ') {
         for (int i = 0; i < word.length(); i++) {
             word[i] = word[i + 1];
@@ -61,13 +76,13 @@ void deleteAllSpaces(string &word) {
     }
 }
 
-void toLowerCase(string &word) {
+void toLowerCase(string &word) { // turn every upper case char to tower
     for (int i = 0; i < word.length(); i++) {
         word[i] = tolower(word[i]);
     }
 }
 
-void exportDict(const string &outFile, const vector<string> &dict) { // export dict to file (each line is a word)
+void exportDict(const string &outFile, const vector<string> &dict) { // export dictionary vector into a file (each line is a word)
     ofstream output;
     output.open(outFile, ios::out);
     if (!output.is_open()) { // failed to open
@@ -98,57 +113,47 @@ void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n) {
         return;
     }
     for (int i = 0; i < n; i++) {
-        getline(input, arr[i]); // each line is a word, read line by line
+        getline(input, arr[i]); // because each line is a word, we read line by line
     }
     input.close();
 }
 
-void generateRandom(const string dict[], const int &n, string *&arr, int &len, const int &randomLen) {
+void generateRandom(const string dict[], const int &dictLen, string *&arr, const int &arrLen) {
     srand((unsigned)time(NULL));
-    arr = new string[randomLen];
+    arr = new string[arrLen];
     if (!arr) {
         cout << "Failed on creating array" << endl;
         return;
     }
-    len = randomLen;
-    for (int i = 0; i < randomLen; i++) {
-        int randIdx = rand() % (n - 1);
+    for (int i = 0; i < arrLen; i++) {
+        int randIdx = rand() % (dictLen);
         arr[i] = dict[randIdx];
     }
 }
 
-void generateSorted(const string dict[], const int &n, string *&arr, int &len, const int &sortedLen) {
-    generateRandom(dict, n, arr, len, sortedLen);
-    mergeSort(arr, len);
+void generateSorted(const string dict[], const int &dictLen, string *&arr, const int &arrLen) {
+    generateRandom(dict, dictLen, arr, arrLen); // generate a random array, then sort it
+    mergeSort(arr, arrLen);
 }
 
-void generateNearlySorted(const string dict[], const int &n, string *&arr, int &len, const int &nearlyLen) {
+void generateNearlySorted(const string dict[], const int &dictLen, string *&arr, const int &arrLen) {
+    // we have 2 parts, first part (which length is 80% total len) is sorted, the remain (20% of total len) is random
     srand((unsigned)time(NULL));
-    int sortedLen = 0.8 * nearlyLen;
-    len = nearlyLen;
-    arr = new string[nearlyLen];
-    if (!arr) {
-        cout << "Failed in creating array" << endl;
-        return;
-    }
-    for (int i = 0; i < sortedLen; i++) {
-        arr[i] = dict[rand() % n];
-    }
-    mergeSort(arr, sortedLen);
-    for (int i = sortedLen; i < nearlyLen; i++) {
-        arr[i] = dict[rand() % n];
-    }
-    for (int i = 0; i < len; i++) {
+    int sortedLen = 0.8 * arrLen; // 80% sorted
+    generateRandom(dict, dictLen, arr, arrLen); // generate a whole random array
+    mergeSort(arr, sortedLen); // sort 80% of that array
+    for (int i = 0; i < arrLen; i++) {
         cout << arr[i] << endl;
     }
 }
 
-void generateReversed(const string dict[], const int &n, string *&arr, int &len, const int &reverseLen) {
-    generateSorted(dict, n, arr, len, reverseLen);
-    for (int i = 0; i < len / 2; i++) {
-        swap(arr[i], arr[len - i - 1]);
+void generateReversed(const string dict[], const int &dictLen, string *&arr, const int &arrLen) {
+    // with reversed array, we will generate a sorted array, then reversed it
+    generateSorted(dict, dictLen, arr, arrLen);
+    for (int i = 0; i < arrLen / 2; i++) {
+        swap(arr[i], arr[arrLen - i - 1]);
     }
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < arrLen; i++) {
         cout << arr[i] << endl;
     }
 }
