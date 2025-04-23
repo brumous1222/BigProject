@@ -38,23 +38,25 @@ vector<string> loadDict(const string &inFile) { // get all words from dictionary
     }
     while (getline(input, line)) { // try to read line by line
         int delimIdx = line.find(DELIM); // find if in current line has DELIM
-        if (delimIdx != string::npos) { // found, extract substring from first char to delimIdx - 1
-            string word = line.substr(0, delimIdx); // extract the word;
+        if (delimIdx != string::npos) { // found, extract substring from first char to delimIdx - 1, not found -> current line does not contain any word
+            string word = line.substr(0, delimIdx); // extract the word
             if (word[delimIdx - 1] == '-' || word[0] == '-') { // skip all suffixs and prefixs
                 continue;
             }
-            deleteAllDigits(word); // delete all digits from a word
+            // process word format
+            deleteAllDigits(word);
             deleteAllSpaces(word);
             toLowerCase(word);
-            if (word.length() <= 0) { // no words
+
+            if (word.length() <= 0) {
                 continue;
             } else if (!dictionary.empty()) {
                 if (word == dictionary[dictionary.size() - 1]) { // check if it is duplicated
                     continue;
                 }
                 if (word == USAGE) { // special case, the word "usage"
-                    int type = line.find(SPECIAL_USAGE); // check if it is the real "Usage" word which on the line "Usage  n."
-                    if (type != delimIdx) {
+                    int wordType = line.find(SPECIAL_USAGE); // check if it is the real "Usage" word which on the line "Usage  n."
+                    if (wordType != delimIdx) { // there is no word type -> this is not the word "usage with type .n", so skip it
                         continue;
                     }
                 }
@@ -63,7 +65,7 @@ vector<string> loadDict(const string &inFile) { // get all words from dictionary
         }
     }
     input.close();
-    // sort(dictionary.begin(), dictionary.end());
+    // sort the dictionary
     insertionSort(dictionary);
     return dictionary;
 }
@@ -90,7 +92,7 @@ void exportDict(const string &outFile, const vector<string> &dict) { // export d
         return;
     }
     int len = dict.size();
-    output << len << endl; // added a line for len of dict array
+    output << len << endl; // added a line that tells the len of dict array
     for (int i = 0; i < len; i++) {
         output << dict[i] << endl;
     }
@@ -107,7 +109,7 @@ void loadShortenDictToArray(const string &shortenDict, string *&arr, int &n) {
     if (!(input >> n)) { // safety
         return;
     }
-    input.ignore(); // skip '\n' char
+    input.ignore(); // skip '\n' char of the first line
     arr = new string[n];
     if (!arr) { // safety
         return;
