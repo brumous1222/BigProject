@@ -81,13 +81,17 @@ void helpInsertionSort(T arr[], int low, int high) {
 template <class T>
 void insertionSort(T arr[], int n) {
     helpInsertionSort(arr, 0, n - 1);
+template <class T>
+void insertionSort(T arr[], int n) {
+    helpInsertionSort(arr, 0, n - 1);
 }
 template <class T>
 void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
-    quickSort(arr, 0, n - 1, depthLimit);
+    quickSort(arr, depthLimit);
     insertionSort(arr, n);
 }
+
 
 template <class T>
 void selectionSort(T arr[], int n) {
