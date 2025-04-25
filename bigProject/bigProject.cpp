@@ -1,8 +1,7 @@
 #include "sortingAlgorithm.h"
 #include "generateArrays.h"
-#include "generateArrays.cpp"
-#include "sortingAlgorithm.cpp"
 #include "commandLineArguments.h"
+#include "commandLineArguments.cpp"
 
 //using namespace std;
 

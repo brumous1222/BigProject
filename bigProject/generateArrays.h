@@ -29,16 +29,13 @@ void generateReverseArray(T arr[], int n, int k);
 template <class T>
 void generateNearlySortedArray(T arr[], int n, int k);
 
+// template <class T>
+// typedef void(*sortFunc)(T arr[], int n);
 
 template <class T>
 void generateData(T arr[], int n, const int order);
 
 template <class T>
 void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n,
-                        const string& algoName, const string& order);
-template <class T>
-void (*sortFunc)(T arr[], int n);
-
-template <class T>
-void measureSortingTime(sortFunc sortName, T arr[], int n, const string& algoName, const string& inputType);
+    const string& algoName, const string& order);
 #endif // !generateArrays.h
