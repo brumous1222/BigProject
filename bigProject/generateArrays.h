@@ -37,7 +37,7 @@ template <class T>
 void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n,
                         const string& algoName, const string& order);
 template <class T>
-typedef void(*sortFunc)(T arr[], int n);
+void (*sortFunc)(T arr[], int n);
 
 template <class T>
 void measureSortingTime(sortFunc sortName, T arr[], int n, const string& algoName, const string& inputType);

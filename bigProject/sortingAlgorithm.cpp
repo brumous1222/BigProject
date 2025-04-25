@@ -81,17 +81,14 @@ void helpInsertionSort(T arr[], int low, int high) {
 template <class T>
 void insertionSort(T arr[], int n) {
     helpInsertionSort(arr, 0, n - 1);
-template <class T>
-void insertionSort(T arr[], int n) {
-    helpInsertionSort(arr, 0, n - 1);
 }
+
 template <class T>
 void introSort(T arr[], int n) {
     int depthLimit = 2 * log(n);
     quickSort(arr, depthLimit);
     insertionSort(arr, n);
 }
-
 
 template <class T>
 void selectionSort(T arr[], int n) {
@@ -218,6 +215,7 @@ void mergeSort(T a[], int n)
 {
 	helpMerge(a, 0, n - 1);
 }
+
 int findMaxNum(int arr[], int n) {
     int maxNum = arr[0];
     for (int i = 1; i < n; i++) {
@@ -227,6 +225,7 @@ int findMaxNum(int arr[], int n) {
     }
     return maxNum;
 }
+
 int getMaxString(void *array, int n) {
     wstring *arr = (wstring*) array;
     int maxLen = 0;

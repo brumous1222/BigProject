@@ -47,8 +47,7 @@ void generateRandomArray(T arr[], int n, int k) {
 template <class T>
 void generateSortedArray(T arr[], int n, int k) {
 	generateRandomArray(arr, n, k);
-	// introSort(arr, n);
-	mergeSort(arr, n);
+	introSort(arr, n);
 }
 
 template <class T>
@@ -93,7 +92,7 @@ void generateData(T arr[], int n, const int order) {
 
 template <class T>
 void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T arr[], int n,
-						const string& algoName, const string& order) {
+	const string& algoName, const string& order) {
 	ofstream out;
 	if (!outputFile.empty()) {
 		out.open(outputFile, ios::app);
@@ -102,6 +101,7 @@ void outputResultToFile(const string& outputFile, void (*sortFunc)(T[], int), T 
 			return;
 		}
 	}
+}
 
 void measureSortingTime(sortFunc sortName, T arr[], int n, const string& algoName, const string& inputType) {
 	T* tempArr = new T[n];
