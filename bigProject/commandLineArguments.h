@@ -20,8 +20,6 @@ InputIterator find(InputIterator first, InputIterator last, const T& val);
 bool isNumber(const string& s);
 void showHelp();
 bool isError(const string& mode, const vector<string>& algs, int inputSize, const string& inputPath);
-// void parseArgs(int argc, char* argv[], string& mode, vector<string>& algs, int& inputSize,
-//     string& inputOrder, string& inputPath, string& outputParams, string& outputFile);
 void parseArgs(int argc, char* argv[], string& mode, vector<string>& algs, int& inputSize,
     string& inputOrder, string& inputPath, string& outputFile);
 void generateArray(const string& fileName, int n, const int dataType);

@@ -3,8 +3,6 @@
 #include "commandLineArguments.h"
 #include "commandLineArguments.cpp"
 
-//using namespace std;
-
 int main(int argc, char* argv[]) {
     locale::global(locale(""));
     wcout.imbue(locale(""));
