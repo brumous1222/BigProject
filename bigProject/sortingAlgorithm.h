@@ -41,9 +41,7 @@ int findMaxNum(int arr[], int n);
 int getMaxString(void *array, int n);
 void countingSort(int arr[], int n);
 void sortByDigit(int arr[], int n, int exp);
-// void sortByStringIndex(void *array, int n, int index);
 void radixSort(int arr[], int n);
-// void radixSortStrings(void *array, int n);
 
 template <class T>
 void bubbleSort(T arr[], int n);
