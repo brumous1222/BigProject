@@ -46,8 +46,7 @@ void generateRandomArray(T arr[], int n, int k) {
 template <class T>
 void generateSortedArray(T arr[], int n, int k) {
 	generateRandomArray(arr, n, k);
-	// introSort(arr, n);
-	mergeSort(arr, n);
+	introSort(arr, n);
 }
 
 template <class T>
