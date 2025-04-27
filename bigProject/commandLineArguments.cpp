@@ -146,15 +146,12 @@ void processSort(vector<string>& algs,const string& inputFile, const string& out
         if (alg == "quickSort") {
             outputResultToFile(outputFile, quickSort, arr, n, "quickSort", order);
         }
-        //if (alg == "counting-sort") {
-        //    record = getRecord(a, n, countingSort, countingSort);
-        //}
-        //if (alg == "radix-sort") {
-        //    record = getRecord(a, n, radixSort, radixSort);
-        //}
-        //if (alg == "flash-sort") {
-        //    record = getRecord(a, n, flashSort, flashSort);
-        //}
+        if (alg == "countingSort") {
+            outputResultToFile(outputFile, countingSort, arr, n, "countingSort", order);
+        }
+        if (alg == "radixSort") {
+            outputResultToFile(outputFile, radixSort, arr, n, "radixSort", order);
+        }
         delete[] arr;
     }
 }
