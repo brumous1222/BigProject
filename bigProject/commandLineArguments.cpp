@@ -1,4 +1,5 @@
 #include "commandLineArguments.h"
+#include "../Dictionary/Dictionary.h"
 
 template<class InputIterator, class T>
 InputIterator find(InputIterator first, InputIterator last, const T& val) {
@@ -156,6 +157,89 @@ void processSort(vector<string>& algs,const string& inputFile, const string& out
     }
 }
 
+if (mode == "-d") {
+    // Dictionary mode processing
+    if (inputSize > 0) {
+        // Create dictionary array and generate data based on input size
+        string* dictArray = nullptr;
+        int dictSize = 0;
+
+        // Load the dictionary from file
+        string dictFile = "dictionary.txt"; // Default dictionary file path
+        vector<string> dictionary = loadDict(dictFile);
+
+        if (!inputOrder.empty()) {
+            // Generate dictionary array based on the specified order
+            if (inputPath.empty()) {
+                inputPath = DEFAULT_NAME;
+            }
+
+            if (inputOrder == "-rand") {
+                generateRandom(&dictionary[0], dictionary.size(), dictArray, inputSize);
+            }
+            else if (inputOrder == "-sorted") {
+                generateSorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+            }
+            else if (inputOrder == "-rsorted") {
+                generateReversed(&dictionary[0], dictionary.size(), dictArray, inputSize);
+            }
+            else if (inputOrder == "-nsorted") {
+                generateNearlySorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+            }
+
+            // Process the sorting
+            processDictionarySort(algs, dictArray, inputSize, outputFile, inputOrder);
+            delete[] dictArray;
+        }
+        else {
+            // If no input order is specified, process all input orders
+            for (size_t i = 0; i < inputOrders.size(); i++) {
+                cout << "Input order: " << inputOrders[i] << "\n";
+                cout << "--------------------\n";
+
+                string* dictArray = nullptr;
+                if (inputOrders[i] == "-rand") {
+                    generateRandom(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrders[i] == "-sorted") {
+                    generateSorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrders[i] == "-rsorted") {
+                    generateReversed(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrders[i] == "-nsorted") {
+                    generateNearlySorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+
+                // Process the sorting
+                processDictionarySort(algs, dictArray, inputSize, outputFile, inputOrders[i]);
+                delete[] dictArray;
+            }
+        }
+    }
+    else if (!inputPath.empty()) {
+        // Load dictionary from input file
+        string* dictArray = nullptr;
+        int dictSize = 0;
+
+        loadShortenDictToArray(inputPath, dictArray, dictSize);
+
+        if (dictSize > 0 && dictArray != nullptr) {
+            cout << "Input size: " << dictSize << "\n";
+
+            // Process the sorting
+            processDictionarySort(algs, dictArray, dictSize, outputFile, inputOrder.empty() ? "unknown" : inputOrder);
+            delete[] dictArray;
+        }
+        else {
+            cout << "Error: Could not load dictionary from file " << inputPath << "\n";
+        }
+    }
+    else {
+        cout << "Error: In dictionary mode, either input size or input file path must be specified\n";
+    }
+}
+
 void processArg(int argc, char* argv[]) {
     const string DEFAULT_NAME = "Array.txt";
     string mode, inputOrder, inputPath, outputFile;
@@ -170,34 +254,118 @@ void processArg(int argc, char* argv[]) {
         return;
     }
 
-    if (inputSize > 0) {
-        if (!inputOrder.empty()) { // generate an array with the chosen input order from argv and sort it
-            if (inputPath.empty()) { // maybe the user has not pass in a input file
-                inputPath = DEFAULT_NAME;
+    if (mode == "-d") {
+        // Dictionary mode processing
+        if (inputSize > 0) {
+            // Create dictionary array and generate data based on input size
+            string* dictArray = nullptr;
+            int dictSize = 0;
+
+            // Load the dictionary from file
+            string dictFile = "dictionary.txt"; // Default dictionary file path
+            vector<string> dictionary = loadDict(dictFile);
+
+            if (!inputOrder.empty()) {
+                // Generate dictionary array based on the specified order
+                if (inputPath.empty()) {
+                    inputPath = DEFAULT_NAME;
+                }
+
+                if (inputOrder == "-rand") {
+                    generateRandom(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrder == "-sorted") {
+                    generateSorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrder == "-rsorted") {
+                    generateReversed(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+                else if (inputOrder == "-nsorted") {
+                    generateNearlySorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                }
+
+                // Process the sorting
+                processDictionarySort(algs, dictArray, inputSize, outputFile, inputOrder);
+                delete[] dictArray;
             }
-            generateArray(inputPath, inputSize, distance(inputOrders.begin(), find(inputOrders.begin(), inputOrders.end(), inputOrder)));
-            processSort(algs, inputPath, outputFile, inputOrder);
+            else {
+                // If no input order is specified, process all input orders
+                for (size_t i = 0; i < inputOrders.size(); i++) {
+                    cout << "Input order: " << inputOrders[i] << "\n";
+                    cout << "--------------------\n";
+
+                    string* dictArray = nullptr;
+                    if (inputOrders[i] == "-rand") {
+                        generateRandom(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                    }
+                    else if (inputOrders[i] == "-sorted") {
+                        generateSorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                    }
+                    else if (inputOrders[i] == "-rsorted") {
+                        generateReversed(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                    }
+                    else if (inputOrders[i] == "-nsorted") {
+                        generateNearlySorted(&dictionary[0], dictionary.size(), dictArray, inputSize);
+                    }
+
+                    // Process the sorting
+                    processDictionarySort(algs, dictArray, inputSize, outputFile, inputOrders[i]);
+                    delete[] dictArray;
+                }
+            }
         }
-        else { // if user does not provide any order of the input, we will do every order
-            for (size_t i = 0; i < inputOrders.size(); i++) {
-                cout << "Input order: " << inputOrders[i] << "\n";
-                cout << "--------------------\n";
-                int j = (i == 0 ? 1 : i == 1 ? 3 : i == 2 ? 4 : 2); // ??
-                string filename = "input_" + to_string(j) + ".txt";
-                generateArray(filename, inputSize, i);
-                processSort(algs, filename, outputFile, inputOrder);
+        else if (!inputPath.empty()) {
+            // Load dictionary from input file
+            string* dictArray = nullptr;
+            int dictSize = 0;
+
+            loadShortenDictToArray(inputPath, dictArray, dictSize);
+
+            if (dictSize > 0 && dictArray != nullptr) {
+                cout << "Input size: " << dictSize << "\n";
+
+                // Process the sorting
+                processDictionarySort(algs, dictArray, dictSize, outputFile, inputOrder.empty() ? "unknown" : inputOrder);
+                delete[] dictArray;
             }
+            else {
+                cout << "Error: Could not load dictionary from file " << inputPath << "\n";
+            }
+        }
+        else {
+            cout << "Error: In dictionary mode, either input size or input file path must be specified\n";
         }
     }
     else {
-        ifstream file(inputPath);
-        if (!file) {
-            cout << "Error: File not found\n";
-            return;
+        if (inputSize > 0) {
+            if (!inputOrder.empty()) { // generate an array with the chosen input order from argv and sort it
+                if (inputPath.empty()) { // maybe the user has not pass in a input file
+                    inputPath = DEFAULT_NAME;
+                }
+                generateArray(inputPath, inputSize, distance(inputOrders.begin(), find(inputOrders.begin(), inputOrders.end(), inputOrder)));
+                processSort(algs, inputPath, outputFile, inputOrder);
+            }
+            else { // if user does not provide any order of the input, we will do every order
+                for (size_t i = 0; i < inputOrders.size(); i++) {
+                    cout << "Input order: " << inputOrders[i] << "\n";
+                    cout << "--------------------\n";
+                    int j = (i == 0 ? 1 : i == 1 ? 3 : i == 2 ? 4 : 2); // ??
+                    string filename = "input_" + to_string(j) + ".txt";
+                    generateArray(filename, inputSize, i);
+                    processSort(algs, filename, outputFile, inputOrder);
+                }
+            }
         }
-        int n; file >> n;
-        file.close();
-        cout << "Input size: " << n << "\n";
-        processSort(algs, inputPath, outputFile, inputOrder);
+        else {
+            ifstream file(inputPath);
+            if (!file) {
+                cout << "Error: File not found\n";
+                return;
+            }
+            int n; file >> n;
+            file.close();
+            cout << "Input size: " << n << "\n";
+            processSort(algs, inputPath, outputFile, inputOrder);
+        }
     }
 }
